@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VELORÉ · Luxury fashion</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- LOADING SCREEN (bonus) -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loader"></div>
+    <p>VELORÉ</p>
+  </div>
+
+  <!-- BACK TO TOP BUTTON (bonus) -->
+  <button id="back-to-top" class="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- TOAST CONTAINER (bonus) -->
+  <div id="toast" class="toast hidden">✨ Item added to cart</div>
+
+  <!-- CART SIDEBAR (slide-in) -->
+  <aside id="cart-sidebar" class="cart-sidebar">
+    <div class="cart-header">
+      <h3>Your cart</h3>
+      <button id="close-cart" class="close-btn" aria-label="Close cart">✕</button>
+    </div>
+    <div id="cart-items" class="cart-items">
+      <!-- dynamic cart content -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Subtotal</span> <span id="cart-subtotal">$0</span>
+      </div>
+      <div class="cart-total">
+        <span>Tax (10%)</span> <span id="cart-tax">$0</span>
+      </div>
+      <div class="cart-total grand">
+        <span>Grand total</span> <span id="cart-grand">$0</span>
+      </div>
+      <button id="checkout-btn" class="checkout-btn">Checkout</button>
+      <p id="empty-cart-msg" class="empty-cart-msg">Your cart is empty.</p>
+    </div>
+  </aside>
+
+  <!-- PRODUCT QUICK VIEW MODAL -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="modal-grid">
+        <div class="modal-image">
+          <img id="modal-img" src="" alt="">
+        </div>
+        <div class="modal-details">
+          <h2 id="modal-title"></h2>
+          <p id="modal-price"></p>
+          <div id="modal-rating" class="rating"></div>
+          <p id="modal-desc">Luxurious fabric, tailored to perfection. Experience unmatched elegance.</p>
+          <div class="size-selector">
+            <label>Size:</label>
+            <button class="size-btn" data-size="S">S</button>
+            <button class="size-btn" data-size="M">M</button>
+            <button class="size-btn" data-size="L">L</button>
+            <button class="size-btn" data-size="XL">XL</button>
+          </div>
+          <div class="quantity-selector">
+            <label>Qty:</label>
+            <button id="modal-decr">−</button>
+            <span id="modal-qty">1</span>
+            <button id="modal-incr">+</button>
+          </div>
+          <button id="modal-add-to-cart" class="add-to-cart-btn">Add to cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DARK/LIGHT TOGGLE (bonus) -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+
+  <!-- HEADER / NAVBAR (sticky) -->
+  <header class="header">
+    <nav class="navbar">
+      <div class="logo">VELORÉ</div>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#shop">Shop</a></li>
+        <li><a href="#new-arrivals">New Arrivals</a></li>
+        <li class="dropdown">
+          <a href="#">Collections</a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Spring Edit</a></li>
+            <li><a href="#">Evening Wear</a></li>
+            <li><a href="#">Accessories</a></li>
+          </ul>
+        </li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-icons">
+        <button class="icon search-icon" id="search-toggle">🔍</button>
+        <button class="icon wishlist-icon">♡</button>
+        <button class="icon cart-icon" id="cart-toggle">
+          🛒 <span id="cart-counter" class="cart-counter">0</span>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+      </div>
+    </nav>
+    <!-- search bar (bonus) hidden by default -->
+    <div id="search-bar" class="search-bar hidden">
+      <input type="text" id="search-input" placeholder="Search products...">
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">Redefining Modern Elegance</h1>
+        <p class="hero-subtitle">Timeless silhouettes, crafted for the discerning.</p>
+        <a href="#shop" class="btn btn-primary">Shop Now</a>
+      </div>
+    </section>
+
+    <!-- FEATURED COLLECTION (4 product cards) -->
+    <section class="featured">
+      <div class="container">
+        <h2 class="section-title">Featured Collection</h2>
+        <div id="featured-grid" class="product-grid">
+          <!-- JS will inject 4 cards -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOP SECTION with filtering, sorting, search -->
+    <section id="shop" class="shop">
+      <div class="container">
+        <h2 class="section-title">Shop</h2>
+        <div class="shop-controls">
+          <div class="filters">
+            <select id="category-filter">
+              <option value="all">All categories</option>
+              <option value="men">Men</option>
+              <option value="women">Women</option>
+              <option value="accessories">Accessories</option>
+            </select>
+            <select id="price-filter">
+              <option value="all">All prices</option>
+              <option value="0-100">Under $100</option>
+              <option value="100-200">$100 - $200</option>
+              <option value="200-1000">Over $200</option>
+            </select>
+            <select id="sort-order">
+              <option value="default">Sort by</option>
+              <option value="low-high">Price: Low to High</option>
+              <option value="high-low">Price: High to Low</option>
+            </select>
+          </div>
+          <!-- search bar integrated (bonus) -->
+          <div class="search-shop">
+            <input type="text" id="shop-search" placeholder="Search name...">
+          </div>
+        </div>
+        <div id="shop-grid" class="product-grid">
+          <!-- dynamic 8+ products -->
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW ARRIVALS HORIZONTAL SLIDER -->
+    <section id="new-arrivals" class="new-arrivals">
+      <div class="container">
+        <h2 class="section-title">New Arrivals</h2>
+        <div class="slider-wrapper">
+          <button class="slider-btn prev" id="slider-prev">←</button>
+          <div id="new-arrivals-slider" class="slider">
+            <!-- JS will populate -->
+          </div>
+          <button class="slider-btn next" id="slider-next">→</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL SECTION (auto slide) -->
+    <section class="testimonials">
+      <div class="container">
+        <h2 class="section-title">Client Voices</h2>
+        <div id="testimonial-slider" class="testimonial-slider">
+          <!-- dynamic slides -->
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER SECTION -->
+    <section class="newsletter">
+      <div class="container">
+        <h2>Join the VELORÉ Inner Circle</h2>
+        <p>Be first to receive exclusive offers and new collections.</p>
+        <form id="newsletter-form">
+          <input type="email" id="newsletter-email" placeholder="Your email address" required>
+          <button type="submit" class="btn btn-gold">Subscribe</button>
+        </form>
+        <div id="newsletter-success" class="success-message hidden">✨ Thank you for subscribing!</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (4 columns) -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>VELORÉ</h4>
+        <p>Timeless elegance for the modern connoisseur. Est. 2025.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick links</h4>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#new-arrivals">New Arrivals</a></li>
+          <li><a href="#">Collections</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Customer service</h4>
+        <ul>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Shipping & returns</a></li>
+          <li><a href="#">Size guide</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <div class="social-icons">
+          <a href="#">IG</a>
+          <a href="#">FB</a>
+          <a href="#">X</a>
+          <a href="#">YT</a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2025 VELORÉ. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- FAKE CHECKOUT POPUP (bonus) -->
+  <div id="checkout-popup" class="checkout-popup hidden">
+    <div class="popup-content">
+      <h3>Order placed (demo)</h3>
+      <p>Thank you for shopping at VELORÉ. This is a simulation.</p>
+      <button id="close-popup">Continue</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
